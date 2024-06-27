@@ -1,0 +1,12 @@
+{% extends 'flatpages/default.html' %}
+
+{% block content %}
+<h1>Удаление товара</h1>
+<hr>
+<form action="" method="post">
+    {% csrf_token %}
+    <p> Вы уверены, что хотите удалить "{{ object.name }}"?</p>
+</form>
+{% endblock content %}
+
+
