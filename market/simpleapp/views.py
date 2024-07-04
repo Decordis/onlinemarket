@@ -1,6 +1,6 @@
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from datetime import datetime
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import ProductForm
 from .models import Product
@@ -84,6 +84,9 @@ class ProductDelete(DeleteView):
     model = Product
     template_name = 'flatpages/product_delete.html'
     success_url = reverse_lazy('product_list')
+
+
+
 
 
 
