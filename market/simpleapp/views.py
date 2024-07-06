@@ -1,6 +1,6 @@
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 from .forms import ProductForm
 from .models import Product
@@ -64,7 +64,8 @@ class ProductDetail(DetailView):
     # Название объекта, в котором будет выбранный пользователем продукт
     context_object_name = 'product'
 
-class ProductCreate(CreateView):
+class ProductCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    permission_required = ('simpleapp.add_product')
     # Указываем нашу разработанную форму
     form_class = ProductForm
     # модель товаров
@@ -74,13 +75,15 @@ class ProductCreate(CreateView):
 #     не забываем про регистрацию юрла
 
 # представление для изменения товара.
-class ProductUpdate(UpdateView):
+class ProductUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    permission_required = ('simpleapp.change_product')
     form_class = ProductForm
     model = Product
     template_name = 'flatpages/product_edit.html'
     #     не забываем про регистрацию юрла
 
-class ProductDelete(DeleteView):
+class ProductDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    permission_required = ('simpleapp.delete_product')
     model = Product
     template_name = 'flatpages/product_delete.html'
     success_url = reverse_lazy('product_list')
